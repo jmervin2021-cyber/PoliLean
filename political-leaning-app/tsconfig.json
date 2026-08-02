@@ -1,0 +1,23 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        midnightNavy: '#0B132B',
+        slateCharcoal: '#2B2D42',
+        libertyBlue: '#3A86EF',
+        vanguardRed: '#D90429',
+        crispWhite: '#F8F9FA',
+        constitutionalGold: '#E9C46A',
+      },
+      fontFamily: {
+        sans: ['Inter', 'Helvetica Neue', 'sans-serif'],
+      },
+    },
+  },
+  plugins: [],
+}
