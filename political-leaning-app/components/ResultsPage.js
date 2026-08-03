@@ -1,5 +1,4 @@
 // components/ResultsPage.js
-'client';
 'use client';
 
 export default function ResultsPage({ score, tier = 'free', onReset }) {
@@ -11,7 +10,6 @@ export default function ResultsPage({ score, tier = 'free', onReset }) {
   const alignmentPercentage = Math.min(Math.max(rawPercentage, 5), 95);
 
   // Corrected logic: Lower scores = Right/Conservative, Higher scores = Left/Progressive
-  // (Or vice-versa depending on how you want your question values totaled)
   const getMappedBeliefSystem = () => {
     if (isPaid) {
       if (score >= 180) return { name: "Democratic Socialism / Progressivism", side: "Far Left" };
@@ -20,7 +18,7 @@ export default function ResultsPage({ score, tier = 'free', onReset }) {
       if (score >= 60) return { name: "Classical Liberalism / Fiscal Conservatism", side: "Center-Right" };
       return { name: "Traditional Conservatism / Populism", side: "Right" };
     } else {
-      // Free Tier (5 distinct options matching the spectrum from Right to Left based on score)
+      // Free Tier: Low score = Right/Conservative, High score = Left/Progressive
       if (score >= 28) return { name: "Progressivism", side: "Center-Left" };
       if (score >= 22) return { name: "Centrism", side: "Center" };
       if (score >= 16) return { name: "Classical Liberalism", side: "Center-Right" };
@@ -28,6 +26,9 @@ export default function ResultsPage({ score, tier = 'free', onReset }) {
       return { name: "Libertarianism", side: "Right-Libertarian" };
     }
   };
+
+  // Invert percentage mapping so low scores (conservative) appear on the Right, and high scores appear on the Left
+  const invertedPercentage = 100 - alignmentPercentage;
 
   const primaryBelief = getMappedBeliefSystem();
 
@@ -60,7 +61,7 @@ export default function ResultsPage({ score, tier = 'free', onReset }) {
             {/* Position Marker */}
             <div 
               className="absolute top-0 bottom-0 w-3.5 bg-white rounded-full shadow-md transform -translate-x-1/2 border-2 border-[#0B132B] transition-all duration-700"
-              style={{ left: `${alignmentPercentage}%` }}
+              style={{ left: `${invertedPercentage}%` }}
             ></div>
           </div>
           
