@@ -1,3 +1,5 @@
+"use client";
+
 import QuizEngine from "../components/QuizEngine";
 import ResultsPage from "../components/ResultsPage";
 import { useState } from "react";
