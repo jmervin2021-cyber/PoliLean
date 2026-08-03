@@ -4,28 +4,33 @@
 export default function ResultsPage({ score, tier = 'free', onReset }) {
   const isPaid = tier === 'paid';
 
-  // Exactly 5 Belief Systems for Free Tier, 11 for Paid Tier
+  // Calculate percentage placement on a 0 to 100 political gauge (Left to Right)
+  // Free tier max score is 35 (7 questions * 5)
+  // Paid tier max score is 250 (50 questions * 5)
+  const maxScore = isPaid ? 250 : 35;
+  const rawPercentage = (score / maxScore) * 100;
+  const alignmentPercentage = Math.min(Math.max(rawPercentage, 5), 95); // keeps the indicator safely inside the bar
+
+  // Determine specific belief system and placement description
   const getMappedBeliefSystem = () => {
     if (isPaid) {
-      // 11 Paid Belief Systems mapping
-      if (score >= 220) return { name: "Democratic Socialism", desc: "Emphasizes public or cooperative ownership of major industries, expansive welfare programs, and strong economic democracy." };
-      if (score >= 190) return { name: "Modern Liberalism / Progressivism", desc: "Focuses on social justice, regulated market capitalism, civil rights protections, and active government investment in public infrastructure." };
-      if (score >= 160) return { name: "Social Democracy", desc: "Balances a capitalist market economy with a comprehensive welfare state and robust labor protections." };
-      if (score >= 130) return { name: "Centrism / Pragmatic Reform", desc: "Favors moderate, evidence-based policy solutions that blend market efficiency with practical social safety nets." };
-      if (score >= 100) return { name: "Classical Liberalism", desc: "Prioritizes individual liberties, free-market capitalism, private property, and limited government intervention." };
-      if (score >= 70) return { name: "Fiscal Conservatism", desc: "Emphasizes balanced budgets, low taxation, minimal regulation, and free-enterprise economic principles." };
-      if (score >= 50) return { name: "Traditional Conservatism", desc: "Values cultural continuity, social order, robust national defense, and the preservation of foundational institutions." };
-      if (score >= 35) return { name: "Libertarianism", desc: "Champions maximal individual autonomy, voluntary free markets, and minimal state presence in personal and economic life." };
-      if (score >= 20) return { name: "Nationalism / Populism", desc: "Focuses on strict national sovereignty, border security, protectionist trade policies, and prioritizing domestic interests." };
-      if (score >= 10) return { name: "Christian Democracy", desc: "Grounded in social ethics, subsidiarity, community solidarity, and family-oriented public policy." };
-      return { name: "Communitarianism", desc: "Emphasizes that individual rights are balanced by social responsibilities and community-centered civic duty." };
+      if (score >= 220) return { name: "Democratic Socialism", side: "Far Left" };
+      if (score >= 190) return { name: "Modern Liberalism / Progressivism", side: "Center-Left" };
+      if (score >= 160) return { name: "Social Democracy", side: "Center-Left" };
+      if (score >= 130) return { name: "Centrism / Pragmatic Reform", side: "Center" };
+      if (score >= 100) return { name: "Classical Liberalism", side: "Center-Right" };
+      if (score >= 70) return { name: "Fiscal Conservatism", side: "Right" };
+      if (score >= 50) return { name: "Traditional Conservatism", side: "Right" };
+      if (score >= 35) return { name: "Libertarianism", side: "Right-Libertarian" };
+      if (score >= 20) return { name: "Nationalism / Populism", side: "Far Right" };
+      if (score >= 10) return { name: "Christian Democracy", side: "Center-Right" };
+      return { name: "Communitarianism", side: "Balanced Center" };
     } else {
-      // Exactly 5 Free Tier Belief Systems
-      if (score >= 28) return { name: "Progressivism", desc: "Focuses on social equity, regulated markets, and robust government programs to support public welfare." };
-      if (score >= 21) return { name: "Centrism", desc: "Emphasizes pragmatic, balanced approaches combining market principles with moderate social support." };
-      if (score >= 14) return { name: "Classical Liberalism", desc: "Prioritizes personal freedom, individual choice, and free-market capitalism with limited government." };
-      if (score >= 8) return { name: "Conservatism", desc: "Values traditional institutions, fiscal responsibility, social order, and national security." };
-      return { name: "Libertarianism", desc: "Champions strict individual autonomy, free markets, and minimal government intervention across all areas." };
+      if (score >= 28) return { name: "Progressivism", side: "Center-Left" };
+      if (score >= 21) return { name: "Centrism", side: "Center" };
+      if (score >= 14) return { name: "Classical Liberalism", side: "Center-Right" };
+      if (score >= 8) return { name: "Conservatism", side: "Right" };
+      return { name: "Libertarianism", side: "Right-Libertarian" };
     }
   };
 
@@ -45,12 +50,35 @@ export default function ResultsPage({ score, tier = 'free', onReset }) {
 
       {/* Results Container */}
       <div className="p-6 md:p-8 rounded-2xl bg-[#0B132B]/90 border border-slate-800 shadow-xl space-y-6 text-left">
-        <div className="space-y-2 border-b border-slate-800 pb-5">
+        
+        {/* Physical Spectrum Gauge */}
+        <div className="space-y-3 pt-1">
+          <div className="flex justify-between items-center text-xs font-mono uppercase text-slate-400">
+            <span>Left</span>
+            <span className="text-[#3A86EF] font-bold">{primaryBelief.side}</span>
+            <span>Right</span>
+          </div>
+
+          {/* Visual Track */}
+          <div className="relative w-full h-3 bg-slate-900 rounded-full border border-slate-700/60 overflow-hidden shadow-inner">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-slate-600 to-red-600 opacity-80"></div>
+            {/* Position Marker */}
+            <div 
+              className="absolute top-0 bottom-0 w-3.5 bg-white rounded-full shadow-md transform -translate-x-1/2 border-2 border-[#0B132B] transition-all duration-700"
+              style={{ left: `${alignmentPercentage}%` }}
+            ></div>
+          </div>
+          
+          <div className="flex justify-between text-[10px] text-slate-500 font-mono px-1">
+            <span>Progressive / Left</span>
+            <span>Center</span>
+            <span>Conservative / Right</span>
+          </div>
+        </div>
+
+        <div className="space-y-2 border-t border-slate-800 pt-5">
           <span className="text-[10px] font-mono text-[#3A86EF] uppercase tracking-wider block">Primary Belief System Mapped</span>
           <h3 className="text-xl font-bold text-white">{primaryBelief.name}</h3>
-          <p className="text-xs text-slate-300 leading-relaxed pt-1">
-            {primaryBelief.desc}
-          </p>
         </div>
 
         {/* Conditional Paid Tier Extra Information */}
