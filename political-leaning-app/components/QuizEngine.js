@@ -1,3 +1,4 @@
+// components/QuizEngine.js
 'use client';
 
 import { useState } from 'react';
@@ -5,6 +6,67 @@ import { useState } from 'react';
 export default function QuizEngine({ tier = 'free', onComplete }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState({});
+  const [isUnlocked, setIsUnlocked] = useState(tier === 'free');
+  const [passwordInput, setPasswordInput] = useState('');
+  const [errorMsg, setErrorMsg] = useState(false);
+
+  // Simple password check for the paid tier unlock
+  const handlePasswordSubmit = (e) => {
+    e.preventDefault();
+    if (passwordInput === 'perch2026') { // Change this to your desired password
+      setIsUnlocked(true);
+      setErrorMsg(false);
+    } else {
+      setErrorMsg(true);
+    }
+  };
+
+  if (tier === 'paid' && !isUnlocked) {
+    return (
+      <div className="max-w-md w-full mx-auto p-6 md:p-8 rounded-2xl bg-[#0B132B]/90 border border-[#E9C46A]/40 shadow-xl space-y-6 text-center">
+        <div className="space-y-2">
+          <span className="text-[10px] font-mono text-[#E9C46A] uppercase tracking-wider bg-[#E9C46A]/10 px-2.5 py-1 rounded border border-[#E9C46A]/20">
+            Locked Tier
+          </span>
+          <h2 className="text-xl font-bold text-white">50-Question Audit Access</h2>
+          <p className="text-xs text-slate-400 leading-relaxed">
+            This comprehensive tier is currently restricted. Enter the access password to proceed.
+          </p>
+        </div>
+
+        <form onSubmit={handlePasswordSubmit} className="space-y-4">
+          <div>
+            <input 
+              type="password"
+              placeholder="Enter Access Password..."
+              value={passwordInput}
+              onChange={(e) => setPasswordInput(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl bg-[#1C2541]/80 border border-slate-700 text-sm text-white focus:outline-none focus:border-[#E9C46A] transition-colors text-center font-mono"
+            />
+            {errorMsg && (
+              <p className="text-[11px] text-red-400 mt-1.5">Incorrect password. Please try again.</p>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            className="w-full py-3 text-sm font-semibold text-[#070B19] bg-[#E9C46A] hover:bg-[#d9b459] rounded-xl transition-all cursor-pointer shadow-md"
+          >
+            Unlock Paid Audit
+          </button>
+        </form>
+
+        <div className="pt-2">
+          <button 
+            onClick={() => window.location.reload()} 
+            className="text-xs text-slate-400 hover:text-white transition-colors underline cursor-pointer"
+          >
+            ← Back to Welcome Screen
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   // 7 Free Tier Questions (Covers 5 core belief systems)
   const freeQuestions = [
