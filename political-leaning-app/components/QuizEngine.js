@@ -67,22 +67,77 @@ export default function QuizEngine({ tier = 'free', onComplete }) {
     );
   }
 
-  // 7 Free Tier Questions (Simple, plain-English everyday scenarios)
+  // 7 Free Tier Questions (Single-focus, plain-English everyday choices)
   const freeQuestions = [
-    { id: 1, text: "When big companies struggle or prices rise, should the government step in with strict rules and help, or should the market fix itself with minimal interference?" },
-    { id: 2, text: "When dealing with public emergencies or safety, should individual personal freedoms always come first, even if it creates risks for the community?" },
-    { id: 3, text: "Do government programs like food assistance, healthcare support, and public aid do more good by helping those in need, or do they create dependency and discourage hard work?" },
-    { id: 4, text: "When society changes, is it usually safer to stick to traditional values and customs, or should we embrace rapid, modern social reform?" },
-    { id: 5, text: "Should national borders have very tight, strict controls with limited entry, or should immigration be more open and welcoming?" },
-    { id: 6, text: "Is it better for our country to work closely with international alliances and global groups, or should we strictly look out for our own interests first?" },
-    { id: 7, text: "Should wealthy individuals and large corporations pay a significantly higher percentage of taxes to help fund public services for everyone else?" }
+    { id: 1, text: "Should the government heavily regulate private corporations to protect consumers and workers?" },
+    { id: 2, text: "Should individual personal liberties always take precedence over collective public safety measures?" },
+    { id: 3, text: "Do government safety net programs (like public aid and healthcare assistance) do more good than harm?" },
+    { id: 4, text: "Is preserving traditional cultural values and long-standing institutions more important than rapid social reform?" },
+    { id: 5, text: "Should national borders feature very tight, strictly enforced controls on all incoming migration?" },
+    { id: 6, text: "Is active participation in international alliances and global treaties beneficial for national strength?" },
+    { id: 7, text: "Should wealthy individuals and major corporations pay a significantly higher tax percentage than middle-income earners?" }
   ];
 
-  // 50 Paid Tier Questions (Nuanced trade-offs & policy specifics, kept simple and clear)
-  const paidQuestions = Array.from({ length: 50 }, (_, i) => ({
-    id: i + 1,
-    text: `Comprehensive Policy Audit Item #${i + 1}: Evaluating specific legislative choices across governance, fiscal budgeting, and social structure trade-offs.`
-  }));
+  // 50 Deep Paid Tier Questions (Granular political, economic, and civic trade-offs)
+  const paidQuestions = [
+    // Economics & Markets (1-12)
+    { id: 1, text: "Should central banks prioritize full employment over strict inflation control during economic downturns?" },
+    { id: 2, text: "To what extent should domestic key industries receive direct government subsidies or protectionist tariffs?" },
+    { id: 3, text: "Should a universal basic income (UBI) replace traditional means-tested welfare assistance programs?" },
+    { id: 4, text: "Should private healthcare systems be completely replaced or heavily counterbalanced by a single-payer public model?" },
+    { id: 5, text: "Should labor unions have legal protections that mandate closed-shop agreements in critical industrial sectors?" },
+    { id: 6, text: "Are aggressive corporate antitrust regulations essential to prevent monopolistic control over digital and physical markets?" },
+    { id: 7, text: "Should public utilities, energy grids, and mass transit systems be exclusively government-owned rather than privatized?" },
+    { id: 8, text: "Should national tax codes shift primarily toward consumption/sales taxes rather than progressive income taxes?" },
+    { id: 9, text: "Should sovereign wealth funds be established using natural resource revenues to pay direct dividends to citizens?" },
+    { id: 10, text: "Should public infrastructure projects prioritize local union labor over lowest-cost private bidding?" },
+    { id: 11, text: "Should minimum wage laws be adjusted automatically based on regional cost-of-living indexes rather than fixed legislative acts?" },
+    { id: 12, text: "Should venture capital and private equity gains be taxed at standard ordinary income rates rather than lower capital gains rates?" },
+
+    // Governance & Civil Liberties (13-25)
+    { id: 13, text: "Should executive branches possess emergency powers to bypass legislative approval during prolonged economic or public health crises?" },
+    { id: 14, text: "Should surveillance capabilities of national intelligence agencies be expanded to counter domestic extremist threats?" },
+    { id: 15, text: "Should digital speech platforms be regulated as public utilities with strict free-speech protections preventing content moderation?" },
+    { id: 16, text: "Should federal constitutional rights strictly override local municipal or state legislation on social matters?" },
+    { id: 17, text: "Should voting be legally mandatory for all eligible adult citizens, similar to jury duty?" },
+    { id: 18, text: "Should campaign financing rely entirely on public taxpayer funding while banning private and corporate political donations?" },
+    { id: 19, text: "Should the structural size and authority of federal regulatory agencies be systematically reduced?" },
+    { id: 20, text: "Should judicial review permit courts to strike down passed legislation based on evolving contemporary constitutional interpretations?" },
+    { id: 21, text: "Should local police departments be fundamentally restructured, defunded, or replaced with specialized civilian response units?" },
+    { id: 22, text: "Should qualified immunity protections for public law enforcement officials be entirely eliminated?" },
+    { id: 23, text: "Should personal privacy rights regarding digital data encryption outweigh law enforcement decryption requests?" },
+    { id: 24, text: "Should federal term limits be constitutionally mandated for all members of the legislative and judicial branches?" },
+    { id: 25, text: "Should the electoral college system be abolished in favor of a direct national popular vote for presidential elections?" },
+
+    // Social Structure & Culture (26-37)
+    { id: 26, text: "Should public educational curricula explicitly incorporate historical systemic injustices and equity frameworks?" },
+    { id: 27, text: "Should parents hold absolute authority over public school reading lists, health curricula, and educational content?" },
+    { id: 28, text: "Should federally funded scientific research institutions prioritize projects aligned with defined national strategic goals?" },
+    { id: 29, text: "Should faith-based organizations retain broad exemptions from federal anti-discrimination mandates based on religious freedom?" },
+    { id: 30, text: "Should recreational drug possession and consumption be fully decriminalized and regulated under commercial markets?" },
+    { id: 31, text: "Should capital punishment remain an authorized legal penalty for heinous federal and state criminal offenses?" },
+    { id: 32, text: "Should higher education tuition at public state universities be completely free funded through progressive taxation?" },
+    { id: 33, text: "Should zoning laws be nationally preempted to allow multi-family housing development in historically single-family suburbs?" },
+    { id: 34, text: "Should historic monuments and public statues commemorating controversial historical figures be permanently removed from public spaces?" },
+    { id: 35, text: "Should public media broadcasting networks receive guaranteed government funding independent of political cycles?" },
+    { id: 36, text: "Should biometric identification tracking be deployed across public transit and urban centers for enhanced security?" },
+    { id: 37, text: "Should affirmative action metrics be utilized in corporate hiring and university admissions to correct historical disparities?" },
+
+    // Foreign Policy, Defense & Environment (38-50)
+    { id: 38, text: "Should national defense spending be significantly expanded to maintain dominant global military superiority?" },
+    { id: 39, text: "Should foreign military aid be strictly conditioned on verifiable human rights compliance by recipient governments?" },
+    { id: 40, text: "Should international climate change agreements impose legally binding carbon emission caps on developing industrial nations?" },
+    { id: 41, text: "Should domestic fossil fuel extraction be phased out rapidly through heavy taxation regardless of short-term energy cost spikes?" },
+    { id: 42, text: "Should nuclear energy be massively expanded as a primary baseline solution for zero-emission electricity generation?" },
+    { id: 43, text: "Should economic sanctions be utilized as the primary foreign policy tool rather than direct military intervention?" },
+    { id: 44, text: "Should national borders feature militarized defense infrastructure alongside automated surveillance systems?" },
+    { id: 45, text: "Should international trade pacts include mandatory labor and environmental standards enforceable via punitive tariffs?" },
+    { id: 46, text: "Should foreign aid budgets prioritize direct humanitarian relief over strategic military partnerships?" },
+    { id: 47, text: "Should domestic agricultural subsidies prioritize regenerative and organic farming methods over industrial scale output?" },
+    { id: 48, text: "Should multilateral global organizations (such as the UN or WHO) hold overriding authority during international health or security crises?" },
+    { id: 49, text: "Should cyber-warfare capabilities be integrated as an official branch of the national armed forces with independent tactical autonomy?" },
+    { id: 50, text: "Should space exploration and celestial resource development be governed strictly by international treaties rather than commercial sovereignty?" }
+  ];
 
   const activeQuestions = tier === 'paid' ? paidQuestions : freeQuestions;
 
