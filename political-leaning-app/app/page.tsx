@@ -68,7 +68,7 @@ export default function Home() {
               </h1>
               
               <p className="text-slate-300 text-sm md:text-base max-w-md mx-auto leading-relaxed font-normal">
-                Answer 15 targeted questions to map your core political values, economic stances, and social perspectives.
+                Help map your core political values, economic stances, and social perspectives by answering these 50 different questions.
               </p>
             </div>
 
@@ -78,7 +78,7 @@ export default function Home() {
                 className="w-full group relative inline-flex items-center justify-center px-6 py-3.5 text-sm font-semibold tracking-wide text-white bg-[#3A86EF] rounded-2xl overflow-hidden shadow-lg shadow-[#3A86EF]/25 hover:bg-blue-600 transition-all cursor-pointer border border-blue-400/30"
               >
                 <span className="relative z-10 flex items-center space-x-2">
-                  <span>Start 15-Question Audit</span>
+                  <span>Start 50-Question Audit</span>
                   <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" suppressHydrationWarning>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                   </svg>
