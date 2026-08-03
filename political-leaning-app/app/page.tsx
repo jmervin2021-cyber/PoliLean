@@ -1,3 +1,4 @@
+// app/page.tsx
 'use client';
 
 import { useState } from 'react';
@@ -7,6 +8,7 @@ import ResultsPage from '../components/ResultsPage';
 export default function Home() {
   const [screen, setScreen] = useState<'welcome' | 'quiz' | 'results'>('welcome');
   const [score, setScore] = useState<number>(0);
+  const [selectedTier, setSelectedTier] = useState<string>('free');
 
   return (
     <main className="min-h-screen bg-[#070B19] flex flex-col justify-between text-[#F8F9FA] selection:bg-[#3A86EF] selection:text-white">
@@ -40,7 +42,7 @@ export default function Home() {
         {screen === 'welcome' && (
           <div className="max-w-xl w-full mx-auto text-center space-y-5 py-4 flex flex-col items-center">
             
-            {/* Seamless Logo Fade Showcase (Compact Height) */}
+            {/* Seamless Logo Fade Showcase */}
             <div className="relative inline-block group -mb-2">
               <div className="absolute inset-0 bg-gradient-to-r from-[#3A86EF]/20 via-[#E9C46A]/20 to-[#D90429]/20 opacity-40 blur-2xl rounded-full"></div>
               <div className="relative w-36 h-36 md:w-44 md:h-44 mx-auto flex items-center justify-center">
@@ -68,32 +70,64 @@ export default function Home() {
               </h1>
               
               <p className="text-slate-300 text-sm md:text-base max-w-md mx-auto leading-relaxed font-normal">
-                Help map your core political values, economic stances, and social perspectives by answering these 50 different questions.
+                Help map your core political values, economic stances, and social perspectives by choosing your depth of analysis.
               </p>
             </div>
 
-            <div className="pt-1 w-full max-w-xs">
+            {/* Tier Selection Card CTAs on Welcome Screen */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 w-full pt-1">
+              {/* Free Tier Action */}
               <button
-                onClick={() => setScreen('quiz')}
-                className="w-full group relative inline-flex items-center justify-center px-6 py-3.5 text-sm font-semibold tracking-wide text-white bg-[#3A86EF] rounded-2xl overflow-hidden shadow-lg shadow-[#3A86EF]/25 hover:bg-blue-600 transition-all cursor-pointer border border-blue-400/30"
+                onClick={() => { setSelectedTier('free'); setScreen('quiz'); }}
+                className="group p-4 rounded-2xl bg-[#0B132B]/90 border border-slate-700/70 hover:border-[#3A86EF] transition-all text-left space-y-2 cursor-pointer shadow-md flex flex-col justify-between"
               >
-                <span className="relative z-10 flex items-center space-x-2">
-                  <span>Start 50-Question Audit</span>
-                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" suppressHydrationWarning>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                  </svg>
-                </span>
+                <div>
+                  <div className="flex justify-between items-center mb-1">
+                    <span className="text-[10px] font-semibold text-[#3A86EF] uppercase tracking-wider bg-[#3A86EF]/10 px-2 py-0.5 rounded border border-[#3A86EF]/20">
+                      Free Tier
+                    </span>
+                    <span className="text-xs font-bold text-white">7 Questions</span>
+                  </div>
+                  <p className="text-xs text-slate-400">Covers 5 core political belief systems with a fast baseline scan.</p>
+                </div>
+                <div className="text-xs font-semibold text-[#3A86EF] flex items-center space-x-1 pt-1">
+                  <span>Start Quick Assessment</span>
+                  <span>→</span>
+                </div>
+              </button>
+
+              {/* Paid Tier Action */}
+              <button
+                onClick={() => { setSelectedTier('paid'); setScreen('quiz'); }}
+                className="group p-4 rounded-2xl bg-[#0B132B]/90 border border-[#E9C46A]/40 hover:border-[#E9C46A] transition-all text-left space-y-2 cursor-pointer shadow-md relative overflow-hidden flex flex-col justify-between"
+              >
+                <div className="absolute top-0 right-0 bg-[#E9C46A] text-[#070B19] text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded-bl">
+                  Deep Dive
+                </div>
+                <div>
+                  <div className="flex justify-between items-center mb-1">
+                    <span className="text-[10px] font-semibold text-[#E9C46A] uppercase tracking-wider bg-[#E9C46A]/10 px-2 py-0.5 rounded border border-[#E9C46A]/20">
+                      Paid Tier
+                    </span>
+                    <span className="text-xs font-bold text-white">50 Questions</span>
+                  </div>
+                  <p className="text-xs text-slate-400">11 systems, historical counterparts, origins, & global mapping.</p>
+                </div>
+                <div className="text-xs font-semibold text-[#E9C46A] flex items-center space-x-1 pt-1">
+                  <span>Unlock Full Audit</span>
+                  <span>→</span>
+                </div>
               </button>
             </div>
           </div>
         )}
 
         {screen === 'quiz' && (
-          <QuizEngine onComplete={(finalScore) => { setScore(finalScore); setScreen('results'); }} />
+          <QuizEngine tier={selectedTier} onComplete={(finalScore) => { setScore(finalScore); setScreen('results'); }} />
         )}
 
         {screen === 'results' && (
-          <ResultsPage score={score} onReset={() => setScreen('welcome')} />
+          <ResultsPage score={score} tier={selectedTier} onReset={() => setScreen('welcome')} />
         )}
       </div>
 
