@@ -1,33 +1,47 @@
 export default function ResultsPage({ score, onReset }) {
-  const tier = score < 0 ? "Center-Left Reformist" : score > 0 ? "Center-Right Pragmatist" : "Institutional Center";
-  const description =
-    score < 0
-      ? "Your answers show a preference for stronger public oversight and collective economic safeguards."
-      : score > 0
-      ? "Your answers show a preference for market flexibility, individual choice, and practical national defense."
-      : "Your answers show a balanced stance between civic institutions and personal freedom.";
+  let tier = "Institutional Center";
+  let description = "Pragmatic balancer of institutional stability, individual autonomy, and moderate governance.";
+
+  if (score < 0) {
+    tier = "Center-Left Reformist";
+    description = "Supports regulated market capitalism balanced with social welfare frameworks and institutional oversight.";
+  } else if (score > 0) {
+    tier = "Center-Right Pragmatist";
+    description = "Champions fiscal responsibility, economic freedom, limited government intervention, and civic tradition.";
+  }
 
   return (
-    <div className="max-w-3xl mx-auto rounded-[32px] border border-slate-800 bg-slate-950/90 p-10 shadow-[0_32px_80px_rgba(0,0,0,0.35)] text-slate-100">
-      <div className="space-y-6 text-center">
-        <p className="text-xs uppercase tracking-[0.35em] text-liberty">Audit complete</p>
-        <h1 className="text-3xl font-semibold sm:text-4xl">Your placement on the spectrum</h1>
-        <div className="mx-auto inline-flex rounded-full border border-liberty/30 bg-liberty/15 px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-liberty">
-          {tier}
-        </div>
-        <p className="mx-auto max-w-2xl text-slate-400 leading-8">{description}</p>
+    <div className="max-w-xl w-full mx-auto p-6 md:p-8 bg-charcoal border border-slate-700 rounded-2xl text-center space-y-6 shadow-2xl">
+      <div className="space-y-2">
+        <span className="text-xs uppercase tracking-widest text-liberty font-bold">Audit Evaluation Complete</span>
+        <h1 className="text-3xl font-extrabold text-silver">Your Broad Alignment</h1>
       </div>
-      <div className="mt-8 rounded-3xl border border-slate-800 bg-slate-900/95 p-6 text-left text-slate-300 shadow-inner">
-        <h2 className="text-sm uppercase tracking-[0.35em] text-slate-400">What this means</h2>
-        <p className="mt-4 text-sm leading-7">
-          This fast audit provides a high-level reflection of your views. It is designed for clarity and quick insight, not a detailed political classification.
+
+      <div className="inline-block bg-liberty/20 text-liberty border border-liberty/40 px-6 py-2 rounded-full text-sm font-extrabold uppercase tracking-wide">
+        {tier}
+      </div>
+
+      <p className="text-slate-300 text-sm leading-relaxed max-w-md mx-auto">{description}</p>
+
+      {/* Constitutional Gold Upsell Banner */}
+      <div className="bg-gradient-to-br from-amber-950/60 to-charcoal border-2 border-gold p-6 rounded-xl text-left space-y-3 relative overflow-hidden shadow-lg">
+        <div className="absolute top-0 right-0 bg-gold text-navy-dark text-[10px] font-black uppercase px-3 py-1 rounded-bl-lg tracking-widest">
+          Pro Upgrade
+        </div>
+        <div className="flex items-center space-x-2 text-gold font-bold">
+          <span className="text-xl">🔒</span>
+          <span>Unlock the 11-Tier Professional Spectrum</span>
+        </div>
+        <p className="text-xs text-silver leading-relaxed">
+          Upgrade to the 50-question deep dive to discover your precise sub-ideology, complete with historical tracking, policy impact analysis, and institutional archetypes.
         </p>
       </div>
+
       <button
         onClick={onReset}
-        className="mt-10 w-full rounded-full bg-liberty px-8 py-4 text-sm font-semibold uppercase tracking-[0.25em] text-slate-950 transition hover:bg-blue-500"
+        className="w-full bg-liberty hover:bg-blue-600 text-silver font-bold py-3.5 rounded-xl transition-all uppercase text-sm tracking-wider shadow-md"
       >
-        Retake audit
+        Retake Free Audit
       </button>
     </div>
   );
