@@ -1,8 +1,26 @@
-'center';
+// components/ResultsPage.js
 'use client';
 
 export default function ResultsPage({ score, tier = 'free', onReset }) {
   const isPaid = tier === 'paid';
+
+  // Determine specific belief system label based on the tier and score
+  const getMappedBeliefSystem = () => {
+    if (isPaid) {
+      if (score >= 200) return "Advanced Liberal Pragmatism / Social Democracy";
+      if (score >= 150) return "Classical Liberalism / Constitutional Republic Framework";
+      if (score >= 100) return "Centrism & Institutional Reform";
+      return "Traditional Conservatism & Market-Led Governance";
+    } else {
+      // Free tier (7 questions, max 35 pts)
+      if (score >= 28) return "Progressive Reformism & Social Welfare Focus";
+      if (score >= 21) return "Centrist Pragmatism & Balanced Civic Governance";
+      if (score >= 14) return "Classical Liberalism & Market Individualism";
+      return "Conservative Realism & Institutional Preservation";
+    }
+  };
+
+  const primaryBelief = getMappedBeliefSystem();
 
   return (
     <div className="max-w-xl w-full mx-auto text-center space-y-6 py-6">
@@ -23,10 +41,11 @@ export default function ResultsPage({ score, tier = 'free', onReset }) {
           <span className="text-sm font-bold text-[#3A86EF]">{score} pts</span>
         </div>
         
-        <div className="space-y-3">
-          <h3 className="text-base font-bold text-white">Primary Belief System Mapped</h3>
-          <p className="text-xs text-slate-400 leading-relaxed">
-            Your responses map across your selected civic framework, emphasizing balanced governance, individual economic agency, and pragmatic social policies.
+        <div className="space-y-2">
+          <span className="text-[10px] font-mono text-[#3A86EF] uppercase tracking-wider block">Primary Belief System Mapped</span>
+          <h3 className="text-lg font-bold text-white">{primaryBelief}</h3>
+          <p className="text-xs text-slate-400 leading-relaxed pt-1">
+            Your responses align directly with this framework, emphasizing balanced governance, individual economic agency, and pragmatic social policies within your selected tier spectrum.
           </p>
         </div>
 
@@ -38,24 +57,24 @@ export default function ResultsPage({ score, tier = 'free', onReset }) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="p-3.5 rounded-xl bg-[#1C2541]/40 border border-slate-700/50 space-y-1">
                 <span className="text-[10px] font-mono text-[#E9C46A] uppercase tracking-wider block">Historical Counterparts</span>
-                <p className="text-xs font-semibold text-slate-200">Matched with classic reformers and historical political figures.</p>
+                <p className="text-xs font-semibold text-slate-200">Matched with classic reformers and historical political figures sharing your structural voting profile.</p>
               </div>
               <div className="p-3.5 rounded-xl bg-[#1C2541]/40 border border-slate-700/50 space-y-1">
                 <span className="text-[10px] font-mono text-[#3A86EF] uppercase tracking-wider block">Global Country Alignment</span>
-                <p className="text-xs font-semibold text-slate-200">Models mirroring current constitutional frameworks globally.</p>
+                <p className="text-xs font-semibold text-slate-200">Models mirroring current constitutional frameworks globally (e.g., Western European democratic models or North American federalist systems).</p>
               </div>
             </div>
 
             <div className="p-3.5 rounded-xl bg-[#1C2541]/40 border border-slate-700/50 space-y-1.5">
               <span className="text-[10px] font-mono text-purple-400 uppercase tracking-wider block">Ideological Origins & Evolution</span>
               <p className="text-xs text-slate-300 leading-relaxed">
-                Traced from core Enlightenment philosophies through modern structural institutional frameworks.
+                Traced from core Enlightenment philosophies through modern structural institutional frameworks emphasizing public contract theory and market mechanics.
               </p>
             </div>
           </div>
         ) : (
           <div className="p-4 rounded-xl bg-[#1C2541]/30 border border-slate-700/40 text-center space-y-2">
-            <p className="text-xs text-slate-400">Want historical counterparts, global country mappings, and 11 distinct belief systems?</p>
+            <p className="text-xs text-slate-400">Want explicit historical counterparts, global country mappings, and 11 distinct belief systems?</p>
             <button 
               onClick={onReset}
               className="text-xs font-bold text-[#E9C46A] hover:underline cursor-pointer"
