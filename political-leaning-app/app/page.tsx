@@ -26,7 +26,7 @@ export default function Home() {
               </span>
             </div>
             <span className="text-[11px] text-slate-400 font-medium tracking-normal block">
-              Independent Civic Self-Discovery
+              Political Beliefs & Values Assessment
             </span>
           </div>
         </div>
@@ -56,19 +56,19 @@ export default function Home() {
               <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-[#1C2541]/60 border border-slate-700/60 shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-[#3A86EF]"></span>
                 <span className="text-xs font-medium text-slate-300 tracking-wide">
-                  Independent Civic Self-Discovery
+                  Political Beliefs Assessment
                 </span>
               </div>
               
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#F8F9FA] tracking-tight leading-[1.15]">
-                Discover Your Place. <br />
+                Chart Your Path. <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3A86EF] via-[#F8F9FA] to-[#E9C46A]">
-                  Find Your Flock.
+                  Build Your Perch.
                 </span>
               </h1>
               
               <p className="text-slate-300 text-base md:text-lg max-w-md mx-auto leading-relaxed font-normal">
-                Explore your core perspectives through an objective balance of values, helping you understand where you naturally align.
+                Answer 15 targeted questions to map your core political values, economic stances, and social perspectives.
               </p>
             </div>
 
@@ -78,7 +78,7 @@ export default function Home() {
                 className="w-full group relative inline-flex items-center justify-center px-8 py-4 text-sm font-semibold tracking-wide text-white bg-[#3A86EF] rounded-2xl overflow-hidden shadow-lg shadow-[#3A86EF]/25 hover:bg-blue-600 transition-all cursor-pointer border border-blue-400/30"
               >
                 <span className="relative z-10 flex items-center space-x-2">
-                  <span>Start 15-Question Guide</span>
+                  <span>Start 15-Question Audit</span>
                   <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" suppressHydrationWarning>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                   </svg>
@@ -99,7 +99,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="py-5 text-center border-t border-slate-800/60 text-xs text-slate-400 tracking-normal bg-[#0B132B]/30 font-medium">
-        Find Your Flock • Designed for Balanced Perspective • Zero Data Retention
+        Find Your Flock • Zero Data Retention • Non-Partisan Political Analysis
       </footer>
     </main>
   );
