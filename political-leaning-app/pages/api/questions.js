@@ -2,8 +2,8 @@ export default function handler(req, res) {
   const questions = [
     {
       id: 1,
-      category: "Economic Structure & Markets",
-      prompt: "To ensure fair competition and protect consumer welfare, the government should actively regulate private enterprise and market practices.",
+      category: "Economic Structure",
+      prompt: "When large companies gain too much power, the government should act to keep markets fair.",
       options: [
         { label: "Strongly Disagree", score: -2 },
         { label: "Disagree", score: -1 },
@@ -14,8 +14,8 @@ export default function handler(req, res) {
     },
     {
       id: 2,
-      category: "Economic Structure & Markets",
-      prompt: "Tax systems should be heavily progressive, utilizing higher tax brackets on accumulated wealth and corporate revenue to fund robust public social safety nets.",
+      category: "Economic Structure",
+      prompt: "Wealthy people and large corporations should pay higher taxes to support essential public services.",
       options: [
         { label: "Strongly Disagree", score: -2 },
         { label: "Disagree", score: -1 },
@@ -26,8 +26,8 @@ export default function handler(req, res) {
     },
     {
       id: 3,
-      category: "Governance & Federal Power",
-      prompt: "Solving major national crises requires centralized federal authority and uniform federal mandates, superseding local or state legislation.",
+      category: "Governance",
+      prompt: "During a national emergency, the federal government should have clear authority to set rules that apply across all states.",
       options: [
         { label: "Strongly Disagree", score: -2 },
         { label: "Disagree", score: -1 },
@@ -38,8 +38,8 @@ export default function handler(req, res) {
     },
     {
       id: 4,
-      category: "Social Order & Individual Liberty",
-      prompt: "Adult individuals should have absolute personal autonomy in their lifestyle choices and personal behavior, provided their actions do not directly harm others.",
+      category: "Personal Freedom",
+      prompt: "Adults should generally be free to make their own personal choices, as long as they do not harm others.",
       options: [
         { label: "Strongly Disagree", score: -2 },
         { label: "Disagree", score: -1 },
@@ -50,8 +50,8 @@ export default function handler(req, res) {
     },
     {
       id: 5,
-      category: "Foreign Policy & Global Standing",
-      prompt: "Maintaining overwhelming global military dominance and participating actively in international alliances (like NATO) is essential for preserving global stability.",
+      category: "Foreign Policy",
+      prompt: "A strong defense and close international partnerships help maintain global stability.",
       options: [
         { label: "Strongly Disagree", score: -2 },
         { label: "Disagree", score: -1 },

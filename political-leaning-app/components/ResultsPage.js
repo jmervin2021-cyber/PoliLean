@@ -1,24 +1,33 @@
 export default function ResultsPage({ score, onReset }) {
-  let tier = score < 0 ? "Center-Left Reformist" : score > 0 ? "Center-Right Pragmatist" : "Institutional Center";
+  const tier = score < 0 ? "Center-Left Reformist" : score > 0 ? "Center-Right Pragmatist" : "Institutional Center";
+  const description =
+    score < 0
+      ? "Your answers show a preference for stronger public oversight and collective economic safeguards."
+      : score > 0
+      ? "Your answers show a preference for market flexibility, individual choice, and practical national defense."
+      : "Your answers show a balanced stance between civic institutions and personal freedom.";
 
   return (
-    <div className="max-w-xl mx-auto p-8 bg-charcoal border border-slate-700 rounded-2xl text-center space-y-6 shadow-2xl">
-      <span className="text-xs uppercase tracking-widest text-liberty font-bold">Audit Complete</span>
-      <h1 className="text-3xl font-extrabold text-silver">Your Broad Placement</h1>
-      <div className="inline-block bg-liberty/20 text-liberty border border-liberty/40 px-6 py-2 rounded-full font-bold">
-        {tier}
-      </div>
-      <div className="p-6 bg-gradient-to-br from-amber-950/40 to-charcoal border border-gold rounded-xl space-y-3 text-left">
-        <div className="text-gold font-bold flex items-center space-x-2">
-          <span>🔒</span>
-          <span>Unlock Pro Professional Tiers</span>
+    <div className="max-w-3xl mx-auto rounded-[32px] border border-slate-800 bg-slate-950/90 p-10 shadow-[0_32px_80px_rgba(0,0,0,0.35)] text-slate-100">
+      <div className="space-y-6 text-center">
+        <p className="text-xs uppercase tracking-[0.35em] text-liberty">Audit complete</p>
+        <h1 className="text-3xl font-semibold sm:text-4xl">Your placement on the spectrum</h1>
+        <div className="mx-auto inline-flex rounded-full border border-liberty/30 bg-liberty/15 px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-liberty">
+          {tier}
         </div>
-        <p className="text-xs text-silver leading-relaxed">
-          Upgrade to the 50-question deep dive to unlock the granular 11-tier professional spectrum, policy impact analysis, and historical archetypes.
+        <p className="mx-auto max-w-2xl text-slate-400 leading-8">{description}</p>
+      </div>
+      <div className="mt-8 rounded-3xl border border-slate-800 bg-slate-900/95 p-6 text-left text-slate-300 shadow-inner">
+        <h2 className="text-sm uppercase tracking-[0.35em] text-slate-400">What this means</h2>
+        <p className="mt-4 text-sm leading-7">
+          This fast audit provides a high-level reflection of your views. It is designed for clarity and quick insight, not a detailed political classification.
         </p>
       </div>
-      <button onClick={onReset} className="w-full bg-liberty hover:bg-blue-600 text-silver font-bold py-3 rounded-xl transition-all uppercase text-sm">
-        Retake Audit
+      <button
+        onClick={onReset}
+        className="mt-10 w-full rounded-full bg-liberty px-8 py-4 text-sm font-semibold uppercase tracking-[0.25em] text-slate-950 transition hover:bg-blue-500"
+      >
+        Retake audit
       </button>
     </div>
   );
