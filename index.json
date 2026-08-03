@@ -1,7 +1,0 @@
-{
-  "name": "polilean",
-  "version": "1.0.0",
-  "scripts": {
-    "dev": "YOUR_FRAMEWORK_START_COMMAND_HERE" 
-  }
-}
