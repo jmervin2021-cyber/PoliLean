@@ -1,19 +1,26 @@
 @import "tailwindcss";
 
-:root {
-  --color-midnightNavy: #0B132B;
-  --color-slateCharcoal: #2B2D42;
-  --color-libertyBlue: #3A86EF;
-  --color-vanguardRed: #D90429;
-  --color-crispWhite: #F8F9FA;
-  --color-constitutionalGold: #E9C46A;
-  --font-sans: 'Inter', 'Helvetica Neue', sans-serif;
+@layer base {
+  :root {
+    --midnight-navy: #0B132B;
+    --slate-charcoal: #2B2D42;
+    --liberty-blue: #3A86EF;
+    --vanguard-red: #D90429;
+    --crisp-white: #F8F9FA;
+    --constitutional-gold: #E9C46A;
+  }
+
+  body {
+    background-color: var(--midnight-navy);
+    color: var(--crisp-white);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
 }
 
-body {
-  background-color: var(--color-midnightNavy);
-  color: var(--color-crispWhite);
-  font-family: var(--font-sans);
-  margin: 0;
-  padding: 0;
-}
+/* Custom Utility Classes for Direct Styling Match */
+.bg-midnightNavy { background-color: #0B132B; }
+.bg-slateCharcoal { background-color: #2B2D42; }
+.text-libertyBlue { color: #3A86EF; }
+.border-libertyBlue { border-color: #3A86EF; }
+.text-constitutionalGold { color: #E9C46A; }
+.bg-constitutionalGold { background-color: #E9C46A; }
