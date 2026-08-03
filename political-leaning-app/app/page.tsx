@@ -1,65 +1,62 @@
-import Image from "next/image";
+import QuizEngine from "../components/QuizEngine";
+import ResultsPage from "../components/ResultsPage";
+import { useState } from "react";
 
 export default function Home() {
+  const [screen, setScreen] = useState("welcome");
+  const [score, setScore] = useState(0);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="min-h-screen bg-navy flex flex-col justify-between text-silver">
+      <header className="py-6 px-6 border-b border-slate-800 bg-navy-dark/70 backdrop-blur-sm flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-3">
+          <span className="w-3 h-3 rounded-full bg-vanguard shadow-glow"></span>
+          <div>
+            <p className="text-xs uppercase tracking-widest text-slate-400">CivicSpectrum</p>
+            <h1 className="text-2xl font-extrabold text-silver">Political Leaning Audit</h1>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+        <p className="text-sm text-slate-400 max-w-xl">
+          A quick 5-question nonpartisan audit to help you explore where your views land on modern political and economic principles.
+        </p>
+      </header>
+
+      <section className="flex-grow flex items-center justify-center p-6">
+        {screen === "welcome" && (
+          <div className="max-w-3xl rounded-[32px] border border-slate-800 bg-navy-dark/80 p-10 shadow-2xl shadow-slate-950/30">
+            <div className="space-y-6 text-center">
+              <p className="text-sm uppercase tracking-[0.35em] text-liberty">Start your audit</p>
+              <h2 className="text-4xl font-extrabold text-silver sm:text-5xl">
+                Discover your political leaning with a short civic audit.
+              </h2>
+              <p className="mx-auto max-w-2xl text-slate-400 text-base leading-8">
+                Answer a handful of questions on policy, governance, social order, and foreign affairs to see where your values fall on the spectrum.
+              </p>
+              <button
+                onClick={() => setScreen("quiz")}
+                className="inline-flex items-center justify-center rounded-full bg-liberty px-10 py-4 text-sm font-bold uppercase tracking-widest text-silver transition hover:bg-blue-600"
+              >
+                Begin Audit
+              </button>
+            </div>
+          </div>
+        )}
+
+        {screen === "quiz" && (
+          <QuizEngine
+            onComplete={(finalScore) => {
+              setScore(finalScore);
+              setScreen("results");
+            }}
+          />
+        )}
+
+        {screen === "results" && <ResultsPage score={score} onReset={() => setScreen("welcome")} />}
+      </section>
+
+      <footer className="py-5 text-center border-t border-slate-800 bg-navy-dark/70 text-xs uppercase tracking-widest text-slate-500">
+        Secure Local Processing • Non-Partisan Civic Engine • Powered by your answers
+      </footer>
+    </main>
   );
 }
