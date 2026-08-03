@@ -40,14 +40,17 @@ export default function Home() {
         {screen === 'welcome' && (
           <div className="max-w-2xl mx-auto text-center space-y-8 py-8 animate-fade-in">
             
-            {/* Center Hero Logo Emblem Showcase */}
+            {/* Center Hero Logo Emblem Showcase - Perfectly Centered */}
             <div className="relative inline-block group">
               <div className="absolute -inset-3 rounded-full bg-gradient-to-r from-[#3A86EF] via-[#E9C46A] to-[#D90429] opacity-40 blur-xl group-hover:opacity-60 transition-opacity"></div>
-              <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-full bg-[#0B132B] border-2 border-[#3A86EF]/60 shadow-2xl p-3 flex items-center justify-center mx-auto overflow-hidden">
-                <img src="/logo.png" alt="Find Your Flock Emblem" className="w-full h-full object-contain rounded-full drop-shadow-[0_0_15px_rgba(58,134,239,0.4)]" />
+              <div className="relative w-48 h-48 md:w-56 md:h-56 rounded-full bg-[#0B132B] border-2 border-[#3A86EF]/60 shadow-2xl flex items-center justify-center mx-auto overflow-hidden">
+                <img 
+                  src="/logo.png" 
+                  alt="Find Your Flock Emblem" 
+                  className="w-full h-full object-cover rounded-full scale-105 transform transition-transform duration-500 group-hover:scale-110" 
+                />
               </div>
             </div>
-
             <div className="space-y-4">
               <span className="text-xs font-mono uppercase tracking-widest text-[#E9C46A] bg-[#E9C46A]/10 border border-[#E9C46A]/30 px-4 py-1.5 rounded-full inline-block shadow-inner">
                 Non-Partisan Ideological Mapping
