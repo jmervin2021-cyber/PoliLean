@@ -62,7 +62,7 @@ export default function Home() {
               
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#F8F9FA] tracking-tight leading-[1.15]">
                 Chart Your Path. <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3A86EF] via-[#F8F9FA] to-[#E9C46A]">
+                <span className="text-[#F8F9FA]">
                   Build Your Perch.
                 </span>
               </h1>
