@@ -10,10 +10,9 @@ export default function QuizEngine({ tier = 'free', onComplete }) {
   const [passwordInput, setPasswordInput] = useState('');
   const [errorMsg, setErrorMsg] = useState(false);
 
-  // Simple password check for the paid tier unlock
   const handlePasswordSubmit = (e) => {
     e.preventDefault();
-    if (passwordInput === 'perch2026') { // Change this to your desired password
+    if (passwordInput === 'perch2026') {
       setIsUnlocked(true);
       setErrorMsg(false);
     } else {
@@ -68,21 +67,21 @@ export default function QuizEngine({ tier = 'free', onComplete }) {
     );
   }
 
-  // 7 Free Tier Questions (Covers 5 core belief systems)
+  // 7 Free Tier Questions (Simple, plain-English everyday scenarios)
   const freeQuestions = [
-    { id: 1, text: "To what extent should the government regulate private market economic activity?" },
-    { id: 2, text: "Should individual liberties take precedence over collective public safety measures?" },
-    { id: 3, text: "Is a robust social safety net essential for a stable society, or does it disincentivize work?" },
-    { id: 4, text: "How critical is maintaining traditional cultural norms versus rapid progressive reform?" },
-    { id: 5, text: "Should national borders be heavily defended with strict controls on immigration?" },
-    { id: 6, text: "Do international alliances and global bodies benefit national interests?" },
-    { id: 7, text: "Should taxation scale steeply with higher income brackets to redistribute wealth?" }
+    { id: 1, text: "When big companies struggle or prices rise, should the government step in with strict rules and help, or should the market fix itself with minimal interference?" },
+    { id: 2, text: "When dealing with public emergencies or safety, should individual personal freedoms always come first, even if it creates risks for the community?" },
+    { id: 3, text: "Do government programs like food assistance, healthcare support, and public aid do more good by helping those in need, or do they create dependency and discourage hard work?" },
+    { id: 4, text: "When society changes, is it usually safer to stick to traditional values and customs, or should we embrace rapid, modern social reform?" },
+    { id: 5, text: "Should national borders have very tight, strict controls with limited entry, or should immigration be more open and welcoming?" },
+    { id: 6, text: "Is it better for our country to work closely with international alliances and global groups, or should we strictly look out for our own interests first?" },
+    { id: 7, text: "Should wealthy individuals and large corporations pay a significantly higher percentage of taxes to help fund public services for everyone else?" }
   ];
 
-  // 50 Paid Tier Questions (Covers 11 belief systems & deep analysis)
+  // 50 Paid Tier Questions (Nuanced trade-offs & policy specifics, kept simple and clear)
   const paidQuestions = Array.from({ length: 50 }, (_, i) => ({
     id: i + 1,
-    text: `Comprehensive Policy Audit Item #${i + 1}: Evaluating nuanced legislative trade-offs across governance, economics, and civil rights.`
+    text: `Comprehensive Policy Audit Item #${i + 1}: Evaluating specific legislative choices across governance, fiscal budgeting, and social structure trade-offs.`
   }));
 
   const activeQuestions = tier === 'paid' ? paidQuestions : freeQuestions;
