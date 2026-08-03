@@ -4,19 +4,28 @@
 export default function ResultsPage({ score, tier = 'free', onReset }) {
   const isPaid = tier === 'paid';
 
-  // Determine specific belief system label based on the tier and score
+  // Exactly 5 Belief Systems for Free Tier, 11 for Paid Tier
   const getMappedBeliefSystem = () => {
     if (isPaid) {
-      if (score >= 200) return "Advanced Liberal Pragmatism / Social Democracy";
-      if (score >= 150) return "Classical Liberalism / Constitutional Republic Framework";
-      if (score >= 100) return "Centrism & Institutional Reform";
-      return "Traditional Conservatism & Market-Led Governance";
+      // 11 Paid Belief Systems mapping
+      if (score >= 220) return { name: "Democratic Socialism", desc: "Emphasizes public or cooperative ownership of major industries, expansive welfare programs, and strong economic democracy." };
+      if (score >= 190) return { name: "Modern Liberalism / Progressivism", desc: "Focuses on social justice, regulated market capitalism, civil rights protections, and active government investment in public infrastructure." };
+      if (score >= 160) return { name: "Social Democracy", desc: "Balances a capitalist market economy with a comprehensive welfare state and robust labor protections." };
+      if (score >= 130) return { name: "Centrism / Pragmatic Reform", desc: "Favors moderate, evidence-based policy solutions that blend market efficiency with practical social safety nets." };
+      if (score >= 100) return { name: "Classical Liberalism", desc: "Prioritizes individual liberties, free-market capitalism, private property, and limited government intervention." };
+      if (score >= 70) return { name: "Fiscal Conservatism", desc: "Emphasizes balanced budgets, low taxation, minimal regulation, and free-enterprise economic principles." };
+      if (score >= 50) return { name: "Traditional Conservatism", desc: "Values cultural continuity, social order, robust national defense, and the preservation of foundational institutions." };
+      if (score >= 35) return { name: "Libertarianism", desc: "Champions maximal individual autonomy, voluntary free markets, and minimal state presence in personal and economic life." };
+      if (score >= 20) return { name: "Nationalism / Populism", desc: "Focuses on strict national sovereignty, border security, protectionist trade policies, and prioritizing domestic interests." };
+      if (score >= 10) return { name: "Christian Democracy", desc: "Grounded in social ethics, subsidiarity, community solidarity, and family-oriented public policy." };
+      return { name: "Communitarianism", desc: "Emphasizes that individual rights are balanced by social responsibilities and community-centered civic duty." };
     } else {
-      // Free tier (7 questions, max 35 pts)
-      if (score >= 28) return "Progressive Reformism & Social Welfare Focus";
-      if (score >= 21) return "Centrist Pragmatism & Balanced Civic Governance";
-      if (score >= 14) return "Classical Liberalism & Market Individualism";
-      return "Conservative Realism & Institutional Preservation";
+      // Exactly 5 Free Tier Belief Systems
+      if (score >= 28) return { name: "Progressivism", desc: "Focuses on social equity, regulated markets, and robust government programs to support public welfare." };
+      if (score >= 21) return { name: "Centrism", desc: "Emphasizes pragmatic, balanced approaches combining market principles with moderate social support." };
+      if (score >= 14) return { name: "Classical Liberalism", desc: "Prioritizes personal freedom, individual choice, and free-market capitalism with limited government." };
+      if (score >= 8) return { name: "Conservatism", desc: "Values traditional institutions, fiscal responsibility, social order, and national security." };
+      return { name: "Libertarianism", desc: "Champions strict individual autonomy, free markets, and minimal government intervention across all areas." };
     }
   };
 
@@ -30,51 +39,46 @@ export default function ResultsPage({ score, tier = 'free', onReset }) {
         </span>
         <h2 className="text-3xl font-extrabold text-[#F8F9FA]">Your Perch Is Set.</h2>
         <p className="text-slate-300 text-sm max-w-md mx-auto leading-relaxed">
-          Your ideological coordinates have been processed successfully. Review your alignment profile below.
+          Your responses have been evaluated against our ideological framework. Review your matched belief system below.
         </p>
       </div>
 
       {/* Results Container */}
       <div className="p-6 md:p-8 rounded-2xl bg-[#0B132B]/90 border border-slate-800 shadow-xl space-y-6 text-left">
-        <div className="flex justify-between items-center border-b border-slate-800 pb-4">
-          <span className="text-xs font-mono uppercase text-slate-400">Calculated Alignment Index</span>
-          <span className="text-sm font-bold text-[#3A86EF]">{score} pts</span>
-        </div>
-        
-        <div className="space-y-2">
+        <div className="space-y-2 border-b border-slate-800 pb-5">
           <span className="text-[10px] font-mono text-[#3A86EF] uppercase tracking-wider block">Primary Belief System Mapped</span>
-          <h3 className="text-lg font-bold text-white">{primaryBelief}</h3>
-          <p className="text-xs text-slate-400 leading-relaxed pt-1">
-            Your responses align directly with this framework, emphasizing balanced governance, individual economic agency, and pragmatic social policies within your selected tier spectrum.
+          <h3 className="text-xl font-bold text-white">{primaryBelief.name}</h3>
+          <p className="text-xs text-slate-300 leading-relaxed pt-1">
+            {primaryBelief.desc}
           </p>
         </div>
 
         {/* Conditional Paid Tier Extra Information */}
         {isPaid ? (
-          <div className="space-y-3 pt-2 border-t border-slate-800">
-            <span className="text-xs font-mono uppercase text-[#E9C46A] tracking-wider block">Deep-Dive Audit Analysis (11 Systems Mapped)</span>
+          <div className="space-y-4 pt-1">
+            <span className="text-xs font-mono uppercase text-[#E9C46A] tracking-wider block">Deep-Dive Audit Insights (11 Systems Mapped)</span>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="p-3.5 rounded-xl bg-[#1C2541]/40 border border-slate-700/50 space-y-1">
-                <span className="text-[10px] font-mono text-[#E9C46A] uppercase tracking-wider block">Historical Counterparts</span>
-                <p className="text-xs font-semibold text-slate-200">Matched with classic reformers and historical political figures sharing your structural voting profile.</p>
+                <span className="text-[10px] font-mono text-[#E9C46A] uppercase tracking-wider block">Historical Counterpart</span>
+                <p className="text-xs font-semibold text-slate-200">Aligned with classical thinkers and historical political leaders sharing your policy voting profile.</p>
               </div>
               <div className="p-3.5 rounded-xl bg-[#1C2541]/40 border border-slate-700/50 space-y-1">
                 <span className="text-[10px] font-mono text-[#3A86EF] uppercase tracking-wider block">Global Country Alignment</span>
-                <p className="text-xs font-semibold text-slate-200">Models mirroring current constitutional frameworks globally (e.g., Western European democratic models or North American federalist systems).</p>
+                <p className="text-xs font-semibold text-slate-200">Reflects modern democratic governance models and constitutional structures currently active worldwide.</p>
               </div>
             </div>
 
             <div className="p-3.5 rounded-xl bg-[#1C2541]/40 border border-slate-700/50 space-y-1.5">
               <span className="text-[10px] font-mono text-purple-400 uppercase tracking-wider block">Ideological Origins & Evolution</span>
               <p className="text-xs text-slate-300 leading-relaxed">
-                Traced from core Enlightenment philosophies through modern structural institutional frameworks emphasizing public contract theory and market mechanics.
+                Traced from foundational philosophical texts through institutional economic and social transformations.
               </p>
             </div>
           </div>
         ) : (
           <div className="p-4 rounded-xl bg-[#1C2541]/30 border border-slate-700/40 text-center space-y-2">
-            <p className="text-xs text-slate-400">Want explicit historical counterparts, global country mappings, and 11 distinct belief systems?</p>
+            <p className="text-xs text-slate-400">Want historical counterparts, global country mappings, and 11 distinct belief systems?</p>
             <button 
               onClick={onReset}
               className="text-xs font-bold text-[#E9C46A] hover:underline cursor-pointer"
