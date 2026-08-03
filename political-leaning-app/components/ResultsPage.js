@@ -1,35 +1,30 @@
 // components/ResultsPage.js
+'client';
 'use client';
 
 export default function ResultsPage({ score, tier = 'free', onReset }) {
   const isPaid = tier === 'paid';
 
-  // Calculate percentage placement on a 0 to 100 political gauge (Left to Right)
-  // Free tier max score is 35 (7 questions * 5)
-  // Paid tier max score is 250 (50 questions * 5)
+  // Max score: Free tier is 35 (7 questions * 5), Paid tier is 250 (50 questions * 5)
   const maxScore = isPaid ? 250 : 35;
   const rawPercentage = (score / maxScore) * 100;
-  const alignmentPercentage = Math.min(Math.max(rawPercentage, 5), 95); // keeps the indicator safely inside the bar
+  const alignmentPercentage = Math.min(Math.max(rawPercentage, 5), 95);
 
-  // Determine specific belief system and placement description
+  // Corrected logic: Lower scores = Right/Conservative, Higher scores = Left/Progressive
+  // (Or vice-versa depending on how you want your question values totaled)
   const getMappedBeliefSystem = () => {
     if (isPaid) {
-      if (score >= 220) return { name: "Democratic Socialism", side: "Far Left" };
-      if (score >= 190) return { name: "Modern Liberalism / Progressivism", side: "Center-Left" };
-      if (score >= 160) return { name: "Social Democracy", side: "Center-Left" };
-      if (score >= 130) return { name: "Centrism / Pragmatic Reform", side: "Center" };
-      if (score >= 100) return { name: "Classical Liberalism", side: "Center-Right" };
-      if (score >= 70) return { name: "Fiscal Conservatism", side: "Right" };
-      if (score >= 50) return { name: "Traditional Conservatism", side: "Right" };
-      if (score >= 35) return { name: "Libertarianism", side: "Right-Libertarian" };
-      if (score >= 20) return { name: "Nationalism / Populism", side: "Far Right" };
-      if (score >= 10) return { name: "Christian Democracy", side: "Center-Right" };
-      return { name: "Communitarianism", side: "Balanced Center" };
+      if (score >= 180) return { name: "Democratic Socialism / Progressivism", side: "Far Left" };
+      if (score >= 140) return { name: "Social Democracy", side: "Center-Left" };
+      if (score >= 100) return { name: "Centrism / Pragmatic Reform", side: "Center" };
+      if (score >= 60) return { name: "Classical Liberalism / Fiscal Conservatism", side: "Center-Right" };
+      return { name: "Traditional Conservatism / Populism", side: "Right" };
     } else {
+      // Free Tier (5 distinct options matching the spectrum from Right to Left based on score)
       if (score >= 28) return { name: "Progressivism", side: "Center-Left" };
-      if (score >= 21) return { name: "Centrism", side: "Center" };
-      if (score >= 14) return { name: "Classical Liberalism", side: "Center-Right" };
-      if (score >= 8) return { name: "Conservatism", side: "Right" };
+      if (score >= 22) return { name: "Centrism", side: "Center" };
+      if (score >= 16) return { name: "Classical Liberalism", side: "Center-Right" };
+      if (score >= 10) return { name: "Conservatism", side: "Right" };
       return { name: "Libertarianism", side: "Right-Libertarian" };
     }
   };
