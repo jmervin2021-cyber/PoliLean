@@ -11,13 +11,13 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#070B19] flex flex-col justify-between text-[#F8F9FA] selection:bg-[#3A86EF] selection:text-white">
       {/* Header Matching the Logo Theme */}
-      <header className="py-4 px-6 border-b border-slate-800/80 bg-[#0B132B]/80 backdrop-blur-md flex items-center justify-between sticky top-0 z-50 shadow-lg">
-        <div className="flex items-center space-x-3">
+      <header className="py-4 px-6 border-b border-slate-800/80 bg-[#0B132B]/80 backdrop-blur-md flex flex-col items-center justify-center gap-3 sticky top-0 z-50 shadow-lg sm:flex-row sm:justify-between sm:gap-0">
+        <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:items-center sm:gap-3">
           <div className="w-10 h-10 rounded-xl bg-[#1C2541] border border-[#3A86EF]/40 shadow-inner flex items-center justify-center overflow-hidden p-0.5">
             <img src="/logo.png" alt="Find Your Flock Emblem" className="w-full h-full object-contain rounded-lg" />
           </div>
-          <div>
-            <div className="flex items-center space-x-2">
+          <div className="text-center sm:text-left">
+            <div className="flex flex-col items-center justify-center gap-2 sm:flex-row sm:items-center sm:justify-start">
               <span className="font-black text-sm uppercase tracking-widest text-[#F8F9FA] block leading-none">
                 Find Your Flock
               </span>
@@ -25,7 +25,7 @@ export default function Home() {
                 CORE v1.0
               </span>
             </div>
-            <span className="text-[10px] text-slate-400 uppercase tracking-widest font-mono">
+            <span className="text-[10px] text-slate-400 uppercase tracking-widest font-mono block mt-1 sm:mt-0">
               Americana Civic Engine // Nesting Protocol
             </span>
           </div>
