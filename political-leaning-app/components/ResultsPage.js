@@ -4,12 +4,18 @@
 export default function ResultsPage({ score, tier = 'free', onReset }) {
   const isPaid = tier === 'paid';
 
-  // Max score: Free tier is 35 (7 questions * 5), Paid tier is 250 (50 questions * 5)
+  // 1. Calculate proper score bounds and alignment
+  // Free tier max score = 35 (7 questions * 5 max points)
+  // Paid tier max score = 250 (50 questions * 5 max points)
   const maxScore = isPaid ? 250 : 35;
+  
+  // We normalize the score into a 0 to 100 percentage.
+  // Lower score = Conservative / Right (0%)
+  // Higher score = Progressive / Left (100%)
   const rawPercentage = (score / maxScore) * 100;
   const alignmentPercentage = Math.min(Math.max(rawPercentage, 5), 95);
 
-  // Corrected logic: Lower scores = Right/Conservative, Higher scores = Left/Progressive
+  // 2. Corrected belief mapping matching the score side accurately
   const getMappedBeliefSystem = () => {
     if (isPaid) {
       if (score >= 180) return { name: "Democratic Socialism / Progressivism", side: "Far Left" };
@@ -18,7 +24,7 @@ export default function ResultsPage({ score, tier = 'free', onReset }) {
       if (score >= 60) return { name: "Classical Liberalism / Fiscal Conservatism", side: "Center-Right" };
       return { name: "Traditional Conservatism / Populism", side: "Right" };
     } else {
-      // Free Tier: Low score = Right/Conservative, High score = Left/Progressive
+      // Free Tier: 5 Core Categories mapped precisely to score
       if (score >= 28) return { name: "Progressivism", side: "Center-Left" };
       if (score >= 22) return { name: "Centrism", side: "Center" };
       if (score >= 16) return { name: "Classical Liberalism", side: "Center-Right" };
@@ -26,9 +32,6 @@ export default function ResultsPage({ score, tier = 'free', onReset }) {
       return { name: "Libertarianism", side: "Right-Libertarian" };
     }
   };
-
-  // Invert percentage mapping so low scores (conservative) appear on the Right, and high scores appear on the Left
-  const invertedPercentage = 100 - alignmentPercentage;
 
   const primaryBelief = getMappedBeliefSystem();
 
@@ -61,7 +64,7 @@ export default function ResultsPage({ score, tier = 'free', onReset }) {
             {/* Position Marker */}
             <div 
               className="absolute top-0 bottom-0 w-3.5 bg-white rounded-full shadow-md transform -translate-x-1/2 border-2 border-[#0B132B] transition-all duration-700"
-              style={{ left: `${invertedPercentage}%` }}
+              style={{ left: `${alignmentPercentage}%` }}
             ></div>
           </div>
           
