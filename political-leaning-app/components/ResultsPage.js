@@ -1,128 +1,134 @@
 // components/ResultsPage.js
 'use client';
 
-export default function ResultsPage({ score, tier = 'free', onReset }) {
-  const isPaid = tier === 'paid';
-
-  // 1. Calculate proper score bounds and alignment
-  // Free tier max score = 35 (7 questions * 5 max points)
-  // Paid tier max score = 250 (50 questions * 5 max points)
-  const maxScore = isPaid ? 250 : 35;
+export default function ResultsPage({ score, tier, onReset }) {
+  const minScore = -30;
+  const maxScore = 30;
   
-  // We normalize the score into a 0 to 100 percentage.
-  // Lower score = Conservative / Right (0%)
-  // Higher score = Progressive / Left (100%)
-  const rawPercentage = (score / maxScore) * 100;
-  const alignmentPercentage = Math.min(Math.max(rawPercentage, 5), 95);
+  const clampedScore = Math.max(minScore, Math.min(maxScore, score));
+  const percentage = ((clampedScore - minScore) / (maxScore - minScore)) * 100;
 
-  // 2. Corrected belief mapping matching the score side accurately
-  const getMappedBeliefSystem = () => {
-    if (isPaid) {
-      if (score >= 180) return { name: "Democratic Socialism / Progressivism", side: "Far Left" };
-      if (score >= 140) return { name: "Social Democracy", side: "Center-Left" };
-      if (score >= 100) return { name: "Centrism / Pragmatic Reform", side: "Center" };
-      if (score >= 60) return { name: "Classical Liberalism / Fiscal Conservatism", side: "Center-Right" };
-      return { name: "Traditional Conservatism / Populism", side: "Right" };
-    } else {
-      // Free Tier: 5 Core Categories mapped precisely to score
-      if (score >= 28) return { name: "Progressivism", side: "Center-Left" };
-      if (score >= 22) return { name: "Centrism", side: "Center" };
-      if (score >= 16) return { name: "Classical Liberalism", side: "Center-Right" };
-      if (score >= 10) return { name: "Conservatism", side: "Right" };
-      return { name: "Libertarianism", side: "Right-Libertarian" };
-    }
-  };
+  let ideologyLabel = "Center / Moderate";
+  let ideologyColor = "text-amber-300";
+  let beliefSystem = "Centrism / Pragmatism";
 
-  const primaryBelief = getMappedBeliefSystem();
+  if (clampedScore <= -10) {
+    ideologyLabel = "Progressive / Left";
+    ideologyColor = "text-blue-400";
+    beliefSystem = "Democratic Socialism / Modern Progressivism";
+  } else if (clampedScore >= 10) {
+    ideologyLabel = "Conservative / Right";
+    ideologyColor = "text-red-400";
+    beliefSystem = "Traditional Conservatism / Constitutionalism";
+  } else {
+    beliefSystem = "Libertarianism / Classical Liberalism";
+  }
 
   return (
-    <div className="max-w-xl w-full mx-auto text-center space-y-6 py-6">
-      <div className="space-y-3">
-        <span className="text-xs font-semibold text-[#E9C46A] uppercase tracking-widest bg-[#E9C46A]/10 border border-[#E9C46A]/30 px-3.5 py-1 rounded-full inline-block">
-          {isPaid ? 'Comprehensive 50-Question Audit Complete' : 'Quick 7-Question Scan Complete'}
-        </span>
-        <h2 className="text-3xl font-extrabold text-[#F8F9FA]">Your Perch Is Set.</h2>
-        <p className="text-slate-300 text-sm max-w-md mx-auto leading-relaxed">
-          Your responses have been evaluated against our ideological framework. Review your matched belief system below.
-        </p>
-      </div>
-
-      {/* Results Container */}
-      <div className="p-6 md:p-8 rounded-2xl bg-[#0B132B]/90 border border-slate-800 shadow-xl space-y-6 text-left">
+    <div className="max-w-xl w-full mx-auto space-y-6 py-4 px-4 sm:px-0">
+      <div className="p-6 md:p-8 rounded-2xl bg-[#0B132B]/95 border border-slate-800 shadow-2xl text-center space-y-6 backdrop-blur-md">
         
-        {/* Physical Spectrum Gauge */}
-        <div className="space-y-3 pt-1">
-          <div className="flex justify-between items-center text-xs font-mono uppercase text-slate-400">
-            <span>Left</span>
-            <span className="text-[#3A86EF] font-bold">{primaryBelief.side}</span>
-            <span>Right</span>
+        <div className="space-y-2">
+          <span className="text-[10px] font-mono text-[#E9C46A] uppercase tracking-widest bg-[#E9C46A]/10 px-3 py-1 rounded-full border border-[#E9C46A]/20">
+            {tier === 'paid' ? '50-Question Pro Analysis Complete' : 'Quick 10-Question Scan Complete'}
+          </span>
+          <h2 className="text-2xl md:text-3xl font-extrabold text-white">Your Perch Is Set.</h2>
+          <p className="text-xs text-slate-400 leading-relaxed max-w-md mx-auto">
+            Your responses have been evaluated against our ideological framework. Review your matched positioning below.
+          </p>
+        </div>
+
+        {/* Thermometer / Scale Container */}
+        <div className="p-5 rounded-2xl bg-[#1C2541]/70 border border-slate-700/60 space-y-4 shadow-inner">
+          <div className="flex justify-between text-[11px] font-mono font-semibold tracking-wider px-1">
+            <span className="text-blue-400">LEFT</span>
+            <span className="text-slate-400">CENTER</span>
+            <span className="text-red-400">RIGHT</span>
           </div>
 
-          {/* Visual Track */}
-          <div className="relative w-full h-3 bg-slate-900 rounded-full border border-slate-700/60 overflow-hidden shadow-inner">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-slate-600 to-red-600 opacity-80"></div>
-            {/* Position Marker */}
+          <div className="relative w-full h-3 bg-slate-900 rounded-full overflow-hidden border border-slate-700 shadow-md">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-slate-700 to-red-600 opacity-80"></div>
+            
             <div 
-              className="absolute top-0 bottom-0 w-3.5 bg-white rounded-full shadow-md transform -translate-x-1/2 border-2 border-[#0B132B] transition-all duration-700"
-              style={{ left: `${alignmentPercentage}%` }}
+              className="absolute top-0 bottom-0 w-4 bg-white rounded-full shadow-[0_0_12px_rgba(255,255,255,0.9)] transition-all duration-500 transform -translate-x-1/2 border-2 border-slate-900"
+              style={{ left: `${percentage}%` }}
             ></div>
           </div>
+
+          <div className="flex justify-between items-center text-xs pt-1 px-1">
+            <span className="text-slate-400 font-medium">Progressive</span>
+            <span className={`font-bold tracking-wide ${ideologyColor}`}>{ideologyLabel}</span>
+            <span className="text-slate-400 font-medium">Conservative</span>
+          </div>
+        </div>
+
+        {/* Primary Belief System Result */}
+        <div className="p-5 rounded-2xl bg-[#070B19]/80 border border-slate-800 space-y-3 text-left shadow-md">
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-mono text-[#E9C46A] uppercase tracking-wider">
+              Primary Belief System Mapped
+            </span>
+            <span className="text-[10px] font-mono text-slate-400 bg-slate-800 px-2 py-0.5 rounded">
+              Score: {clampedScore > 0 ? `+${clampedScore}` : clampedScore}
+            </span>
+          </div>
           
-          <div className="flex justify-between text-[10px] text-slate-500 font-mono px-1">
-            <span>Progressive / Left</span>
-            <span>Center</span>
-            <span>Conservative / Right</span>
-          </div>
-        </div>
-
-        <div className="space-y-2 border-t border-slate-800 pt-5">
-          <span className="text-[10px] font-mono text-[#3A86EF] uppercase tracking-wider block">Primary Belief System Mapped</span>
-          <h3 className="text-xl font-bold text-white">{primaryBelief.name}</h3>
-        </div>
-
-        {/* Conditional Paid Tier Extra Information */}
-        {isPaid ? (
-          <div className="space-y-4 pt-1">
-            <span className="text-xs font-mono uppercase text-[#E9C46A] tracking-wider block">Deep-Dive Audit Insights (11 Systems Mapped)</span>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="p-3.5 rounded-xl bg-[#1C2541]/40 border border-slate-700/50 space-y-1">
-                <span className="text-[10px] font-mono text-[#E9C46A] uppercase tracking-wider block">Historical Counterpart</span>
-                <p className="text-xs font-semibold text-slate-200">Aligned with classical thinkers and historical political leaders sharing your policy voting profile.</p>
-              </div>
-              <div className="p-3.5 rounded-xl bg-[#1C2541]/40 border border-slate-700/50 space-y-1">
-                <span className="text-[10px] font-mono text-[#3A86EF] uppercase tracking-wider block">Global Country Alignment</span>
-                <p className="text-xs font-semibold text-slate-200">Reflects modern democratic governance models and constitutional structures currently active worldwide.</p>
-              </div>
-            </div>
-
-            <div className="p-3.5 rounded-xl bg-[#1C2541]/40 border border-slate-700/50 space-y-1.5">
-              <span className="text-[10px] font-mono text-purple-400 uppercase tracking-wider block">Ideological Origins & Evolution</span>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Traced from foundational philosophical texts through institutional economic and social transformations.
+          <h3 className="text-xl font-bold text-white tracking-tight">{beliefSystem}</h3>
+          
+          {tier === 'free' ? (
+            <div className="pt-3 border-t border-slate-800/80 space-y-4">
+              <p className="text-xs text-slate-300 leading-relaxed font-normal">
+                You took the quick 10-question scan. Unlock the <strong className="text-[#E9C46A] font-semibold">50-Question Pro Analysis</strong> to map your complete intellectual footprint across 11 distinct sub-ideologies, historical archetypes, and global alignments.
               </p>
-            </div>
-          </div>
-        ) : (
-          <div className="p-4 rounded-xl bg-[#1C2541]/30 border border-slate-700/40 text-center space-y-2">
-            <p className="text-xs text-slate-400">Want historical counterparts, global country mappings, and 11 distinct belief systems?</p>
-            <button 
-              onClick={onReset}
-              className="text-xs font-bold text-[#E9C46A] hover:underline cursor-pointer"
-            >
-              Unlock the 50-Question Paid Tier →
-            </button>
-          </div>
-        )}
-      </div>
 
-      <div className="pt-2">
-        <button
-          onClick={onReset}
-          className="px-6 py-3 text-sm font-semibold tracking-wide text-slate-300 bg-[#1C2541] hover:bg-[#1C2541]/80 rounded-xl transition-all cursor-pointer border border-slate-700/60"
-        >
-          Retake Assessment
-        </button>
+              {/* PERSISTENT PRO ADVANTAGE HIGHLIGHT BOX */}
+              <div className="p-4 rounded-xl bg-gradient-to-br from-[#1C2541] to-[#121A33] border border-[#E9C46A]/40 space-y-3 shadow-lg">
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm">💎</span>
+                  <h4 className="text-xs font-bold text-[#E9C46A] uppercase tracking-wider">What You Unlock with Pro Analysis:</h4>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-slate-200 font-mono">
+                  <div className="bg-[#0B132B]/80 p-2 rounded border border-slate-700/50 flex items-center space-x-2">
+                    <span className="text-[#E9C46A] font-bold">✓</span>
+                    <span>50 Granular Policy Items</span>
+                  </div>
+                  <div className="bg-[#0B132B]/80 p-2 rounded border border-slate-700/50 flex items-center space-x-2">
+                    <span className="text-[#E9C46A] font-bold">✓</span>
+                    <span>Historical Archetypes Match</span>
+                  </div>
+                  <div className="bg-[#0B132B]/80 p-2 rounded border border-slate-700/50 flex items-center space-x-2">
+                    <span className="text-[#E9C46A] font-bold">✓</span>
+                    <span>Global Country Mappings</span>
+                  </div>
+                  <div className="bg-[#0B132B]/80 p-2 rounded border border-slate-700/50 flex items-center space-x-2">
+                    <span className="text-[#E9C46A] font-bold">✓</span>
+                    <span>11 Sub-Ideology Breakdowns</span>
+                  </div>
+                </div>
+
+                <p className="text-[11px] text-slate-400 italic">
+                  Gain immediate access by entering your Pro access code on the welcome screen.
+                </p>
+              </div>
+            </div>
+          ) : (
+            <p className="text-xs text-slate-300 leading-relaxed">
+              Comprehensive ideological breakdown based on your weighted economic and social governance selections across 50 deep policy data points.
+            </p>
+          )}
+        </div>
+
+        {/* Action Button */}
+        <div className="pt-2">
+          <button
+            onClick={onReset}
+            className="w-full py-3.5 px-4 rounded-xl bg-[#3A86EF] hover:bg-[#3A86EF]/80 text-white font-semibold text-sm transition-all shadow-lg cursor-pointer"
+          >
+            Retake Assessment
+          </button>
+        </div>
+
       </div>
     </div>
   );
