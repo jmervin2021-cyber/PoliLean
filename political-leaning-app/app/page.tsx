@@ -148,7 +148,7 @@ export default function Home() {
             </div>
           </div>
         ) : (
-          <QuizEngine tier={selectedTier} onComplete={(score) => setQuizScore(score)} />
+          <QuizEngine tier={selectedTier} onComplete={(score:any) => setQuizScore(score)} />
         )}
       </div>
 
