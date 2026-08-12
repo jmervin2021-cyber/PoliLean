@@ -70,4 +70,4 @@ export default function Home() {
 
       <div className="relative z-10 w-full flex-1 flex items-center justify-center py-2">
         {quizScore !== null ? (
-          <ResultsPage score={quizScore} tier={selectedTier || 'free
+          <ResultsPage score={quizScore} tier={selectedTier || 'free'} />
