@@ -1,73 +1,76 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import QuizEngine from '@/components/QuizEngine';
 import ResultsPage from '@/components/ResultsPage';
 
 export default function Home() {
-  const [selectedTier, setSelectedTier] = useState<null | 'free' | 'paid'>(null);
+  const [selectedTier, setSelectedTier] = useState<'free' | 'paid' | null>(null);
   const [quizScore, setQuizScore] = useState<number | null>(null);
-  const [showPaidTooltip, setShowPaidTooltip] = useState(false);
-
-  const handleReset = () => {
-    setSelectedTier(null);
-    setQuizScore(null);
-  };
 
   return (
-    <main className="relative min-h-screen text-white flex flex-col items-center justify-between p-6 overflow-hidden bg-[#0A0F1D]">
-      
-      {/* Patriotic Red, White, and Blue Flag Wave Background Effect */}
-      <style jsx>{`
-        @keyframes patrioticFlagWave {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        .patriotic-flag-bg {
-          background: linear-gradient(
-            120deg, 
-            rgba(15, 23, 42, 0.88) 0%, 
-            rgba(29, 53, 87, 0.78) 25%, 
-            rgba(255, 255, 255, 0.08) 50%, 
-            rgba(168, 50, 50, 0.35) 75%, 
-            rgba(15, 23, 42, 0.88) 100%
-          );
-          background-size: 300% 300%;
-          animation: patrioticFlagWave 10s ease-in-out infinite;
-        }
-      `}</style>
+    <main className="min-h-screen bg-[#0B132B] text-[#F8F9FA] flex flex-col justify-between p-4 relative overflow-hidden">
+      <div className="max-w-4xl mx-auto w-full flex-1 flex flex-col justify-center items-center">
+        {!selectedTier ? (
+          <div className="text-center space-y-6">
+            <h1 className="text-3xl sm:text-5xl font-extrabold text-[#F8F9FA] tracking-tight">
+              Political Alignment Engine
+            </h1>
+            <p className="text-slate-300 max-w-lg mx-auto text-sm sm:text-base">
+              Discover your precise position on the political spectrum through objective policy trade-off evaluations.
+            </p>
 
-      {/* Patriotic Background Layer */}
-      <div className="absolute inset-0 patriotic-flag-bg pointer-events-none z-0"></div>
+            <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto pt-6">
+              {/* Free Tier Card */}
+              <button
+                onClick={() => setSelectedTier('free')}
+                className="bg-[#1C2541] border border-slate-700 hover:border-[#3A86EF] p-6 rounded-xl text-left transition-all group"
+              >
+                <div className="text-xs text-[#3A86EF] font-semibold uppercase tracking-wider mb-1">
+                  Basic Audit
+                </div>
+                <div className="text-xl font-bold text-white mb-2 group-hover:text-[#3A86EF]">
+                  10 Questions (Free)
+                </div>
+                <p className="text-xs text-slate-400">
+                  Quick 5-tier political spectrum placement with basic breakdown.
+                </p>
+              </button>
 
-      {/* Content Layer */}
-      <div className="relative z-10 w-full max-w-xl mx-auto pt-6 pb-2 text-center space-y-4">
-        
-        {/* Extremely Large Logo - Still / Non-Rotating */}
-        <div className="flex justify-center mb-1 py-1">
-          <div className="p-4 rounded-3xl bg-[#0B132B]/80 border-2 border-[#E9C46A]/60 shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-md">
-            <Image 
-              src="/logo.png" 
-              alt="App Logo" 
-              width={300} 
-              height={300} 
-              className="w-64 h-64 md:w-72 md:h-72 object-contain mx-auto drop-shadow-2xl rounded-2xl"
-              priority
-            />
+              {/* Paid Tier Card */}
+              <button
+                onClick={() => setSelectedTier('paid')}
+                className="bg-[#1C2541] border border-[#E9C46A]/40 hover:border-[#E9C46A] p-6 rounded-xl text-left transition-all group relative overflow-hidden"
+              >
+                <div className="text-xs text-[#E9C46A] font-semibold uppercase tracking-wider mb-1">
+                  Pro Analysis
+                </div>
+                <div className="text-xl font-bold text-white mb-2 group-hover:text-[#E9C46A]">
+                  Deep Analysis
+                </div>
+                <p className="text-xs text-slate-400">
+                  Full multi-axis breakdown across 11 granular ideological tiers.
+                </p>
+              </button>
+            </div>
           </div>
-        </div>
-
-        {/* Catchphrases */}
-        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-blue-400 via-white to-red-400 bg-clip-text text-transparent drop-shadow-sm">
-          Find Your Flock
-        </h1>
-        <p className="text-xs md:text-sm text-slate-200 font-medium">
-          Determine your political ideological perch with precision. No fluff, just facts.
-        </p>
+        ) : (
+          <div className="w-full flex-1 flex flex-col items-center justify-center">
+            {quizScore !== null ? (
+              <ResultsPage score={quizScore} tier={selectedTier || 'free'} />
+            ) : (
+              <QuizEngine
+                tier={selectedTier}
+                onComplete={(score: number) => setQuizScore(score)}
+              />
+            )}
+          </div>
+        )}
       </div>
 
-      <div className="relative z-10 w-full flex-1 flex items-center justify-center py-2">
-        {quizScore !== null ? (
-          <ResultsPage score={quizScore} tier={selectedTier || 'free'} />
+      <footer className="relative z-10 text-center text-[10px] text-slate-400 py-4">
+        Political Alignment Engine &copy; 2026
+      </footer>
+    </main>
+  );
+}
