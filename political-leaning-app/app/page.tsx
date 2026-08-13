@@ -149,6 +149,8 @@ export default function Home() {
           </div>
         ) : (
           <QuizEngine tier={selectedTier} onComplete={(score: number) =>
+            console.log(`Quiz completed with score: ${score}`)
+          } />
         )}
       </div>
 
